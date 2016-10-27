@@ -16,15 +16,15 @@ import java.net.Socket;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 /**
- * å­¦ç”Ÿæ¥æ”¶æ–‡ä»¶ï¼ˆè‡ªå·±è¿è¡Œï¼‰
+ * Ñ§Éú½ÓÊÕÎÄ¼ş£¨×Ô¼ºÔËĞĞ£©
  * @author Administrator
  *
  */
 public class CDDocument extends Thread{
-	//æœåŠ¡å™¨ç«¯
-	int port= 8822;//è®¾ç½®çš„ç«¯å£å·
+	//·şÎñÆ÷¶Ë
+	int port= 8822;//ÉèÖÃµÄ¶Ë¿ÚºÅ
 	String ip="127.0.0.1";
-	public void run(){//æ¥å—å®¢æˆ·ç«¯ä¸Šä¼ çš„æ–‡ä»¶ï¼Œå¹¶ä¿å­˜
+	public void run(){//½ÓÊÜ¿Í»§¶ËÉÏ´«µÄÎÄ¼ş£¬²¢±£´æ
 		try {  
 			Socket socket = new Socket(ip,port); 
 			DataInputStream is = null;
@@ -34,7 +34,7 @@ public class CDDocument extends Thread{
 				os = socket.getOutputStream(); 
 				
 
-				//1ã€å¾—åˆ°æ–‡ä»¶å       
+				//1¡¢µÃµ½ÎÄ¼şÃû       
 				String filename="E:\\";
 //				JFileChooser jf=new JFileChooser();
 //				jf.setFileSelectionMode(jf.FILES_AND_DIRECTORIES);
@@ -44,10 +44,10 @@ public class CDDocument extends Thread{
 //				String filename=jf.getSelectedFile().getPath();
 				//String filename=jf.getAbsolutePath();
 				
-				//readUTF:ä»è¾“å…¥æµä¸­è¯»å–utf-8ç¼–ç çš„æ•°æ®ï¼Œå¹¶ä»¥Stringå­—ç¬¦ä¸²çš„å½¢å¼è¿”å›
+				//readUTF:´ÓÊäÈëÁ÷ÖĞ¶ÁÈ¡utf-8±àÂëµÄÊı¾İ£¬²¢ÒÔString×Ö·û´®µÄĞÎÊ½·µ»Ø
 				filename += is.readUTF(); 
 				//////////////////////////
-//				//å·²æœ‰æ–‡ä»¶å­˜åœ¨æç¤ºè¦†ç›–
+//				//ÒÑÓĞÎÄ¼ş´æÔÚÌáÊ¾¸²¸Ç
 //				for(int i=1;i<10;i++){
 //					if(file.exists()){
 //						filename=filename+"("+i+")";
@@ -58,24 +58,24 @@ public class CDDocument extends Thread{
 //					filename+=File.separator+data;
 //				}
 				/////////////////////////
-				System.out.println("æ–°ç”Ÿæˆçš„æ–‡ä»¶åä¸º:"+filename);
+				System.out.println("ĞÂÉú³ÉµÄÎÄ¼şÃûÎª:"+filename);
 				
 				//////////////////////////////////////////////
-				//å†™å…¥è¯¸å¦‚å›¾åƒæ•°æ®ä¹‹ç±»çš„åŸå§‹å­—èŠ‚çš„æµï¼Œä»¥byteæ•°ç»„ä½œä¸ºæ•°æ®è¯»å…¥çš„ç¼“å†²åŒºï¼ˆå­—èŠ‚æµï¼‰
-				//è¦å†™å­—ç¬¦æµç”¨FileWriter
+				//Ğ´ÈëÖîÈçÍ¼ÏñÊı¾İÖ®ÀàµÄÔ­Ê¼×Ö½ÚµÄÁ÷£¬ÒÔbyteÊı×é×÷ÎªÊı¾İ¶ÁÈëµÄ»º³åÇø£¨×Ö½ÚÁ÷£©
+				//ÒªĞ´×Ö·ûÁ÷ÓÃFileWriter
 				FileOutputStream fos=new FileOutputStream(filename);
-				//é€šè¿‡å­—èŠ‚æ•°ç»„æ¥ç¼“å†²æ•°æ®ï¼ˆå­—èŠ‚ç¼“å†²æµï¼‰
+				//Í¨¹ı×Ö½ÚÊı×éÀ´»º³åÊı¾İ£¨×Ö½Ú»º³åÁ÷£©
 				BufferedOutputStream bos=new BufferedOutputStream(fos);
 				DataOutputStream dos = new DataOutputStream(bos);
 				////////////////////////////////////////////////
 				
 //				DataOutputStream dos = new DataOutputStream(new BufferedOutputStream(new BufferedOutputStream(new FileOutputStream(filename))));
-				//è®¾ç½®æ•°æ®è¯»å…¥çš„ç¼“å†²åŒº 
+				//ÉèÖÃÊı¾İ¶ÁÈëµÄ»º³åÇø 
 				byte[] b = new byte[1024]; 
 				int length = 0;  
 				while((length=is.read(b))!=-1){  
-					//æŠŠsocketè¾“å…¥æµå†™åˆ°æ–‡ä»¶è¾“å‡ºæµä¸­å»  
-					//å°†æŒ‡å®šbyteæ•°ç»„ä»åç§»é‡0å¼€å§‹çš„lengthä¸ªå­—èŠ‚å†™å…¥æ­¤æ–‡ä»¶è¾“å‡ºæµ
+					//°ÑsocketÊäÈëÁ÷Ğ´µ½ÎÄ¼şÊä³öÁ÷ÖĞÈ¥  
+					//½«Ö¸¶¨byteÊı×é´ÓÆ«ÒÆÁ¿0¿ªÊ¼µÄlength¸ö×Ö½ÚĞ´Èë´ËÎÄ¼şÊä³öÁ÷
 					dos.write(b, 0, length);  
 				}  
 				dos.flush();  
@@ -87,13 +87,11 @@ public class CDDocument extends Thread{
 			e.printStackTrace();  
 		} catch (Exception e){
 			e.printStackTrace();
-			System.out.println("socketå…³é—­å•¦");
+			System.out.println("socket¹Ø±ÕÀ²");
 		}  
 	}
 
-//public static void main(String arg[]) {
-////       SDocument s=new SDocument();
-////       s.start();
-//	new CDDocument().start();
-//   }
+	public static void main(String arg[]) {
+		new CDDocument().start();
+	}
 }

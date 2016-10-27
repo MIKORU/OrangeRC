@@ -9,32 +9,32 @@ import java.io.OutputStream;
 import java.net.Socket;
 
 /**
- * æ•™å¸ˆæ¥æ”¶æ–‡ä»¶   
+ * ½ÌÊ¦½ÓÊÕÎÄ¼ş   
  */
 public class SDDocument extends Thread{
 
-	private String ip = "127.0.0.1";// è®¾ç½®æˆæœåŠ¡å™¨IP
-	private int port = 8822;//è®¾ç½®ç«¯å£å·
+	private String ip = "127.0.0.1";// ÉèÖÃ³É·şÎñÆ÷IP
+	private int port = 8822;//ÉèÖÃ¶Ë¿ÚºÅ
 	public void start(){
-		//ä»æœåŠ¡å™¨ç«¯ä¸‹è½½æ–‡ä»¶
+		//´Ó·şÎñÆ÷¶ËÏÂÔØÎÄ¼ş
 		try { 
 			Socket socket = new Socket(ip,port);
 			while(true){  
 				DataInputStream is = new  DataInputStream(socket.getInputStream());   
 				OutputStream os = socket.getOutputStream();                  
-				//1ã€å¾—åˆ°æ–‡ä»¶å       
+				//1¡¢µÃµ½ÎÄ¼şÃû       
 				String filename="E:\\";
 				filename += is.readUTF(); 
 
-				System.out.println("æ–°ç”Ÿæˆçš„æ–‡ä»¶åä¸º:"+filename);  
+				System.out.println("ĞÂÉú³ÉµÄÎÄ¼şÃûÎª:"+filename);  
 				FileOutputStream fos=new FileOutputStream(filename);
-				//é€šè¿‡å­—èŠ‚æ•°ç»„æ¥ç¼“å†²æ•°æ®ï¼ˆå­—èŠ‚ç¼“å†²æµï¼‰
+				//Í¨¹ı×Ö½ÚÊı×éÀ´»º³åÊı¾İ£¨×Ö½Ú»º³åÁ÷£©
 				BufferedOutputStream bos=new BufferedOutputStream(fos);
 				DataOutputStream dos = new DataOutputStream(bos);
 				byte[] b = new byte[1024]; 
 				int length = 0;  
 				while((length=is.read(b))!=-1){  
-					//2ã€æŠŠsocketè¾“å…¥æµå†™åˆ°æ–‡ä»¶è¾“å‡ºæµä¸­å»  
+					//2¡¢°ÑsocketÊäÈëÁ÷Ğ´µ½ÎÄ¼şÊä³öÁ÷ÖĞÈ¥  
 					fos.write(b, 0, length);  
 				}  
 				dos.flush();  

@@ -9,6 +9,8 @@ import javax.swing.JOptionPane;
 import javax.swing.border.Border;
 import javax.swing.border.EtchedBorder;
 
+import Document.SUDocument;
+
 /**
  * 
  * 对主界面四个功能按钮的监听
@@ -32,6 +34,10 @@ public class RMouseListener implements MouseListener {
 			}else{
 				JOptionPane.showMessageDialog(null,"关闭控制屏幕功能\n","提示",JOptionPane.DEFAULT_OPTION);
 			}
+		}
+		if("文件传输".equals(btnName.trim())){
+			SUDocument d=new SUDocument();
+			d.start();
 		}
 	}
 

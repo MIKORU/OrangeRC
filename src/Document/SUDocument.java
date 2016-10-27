@@ -14,33 +14,33 @@ import java.net.Socket;
 
 import javax.swing.JFileChooser;
 /**
- * æ•™å¸ˆé€‰æ‹©æ–‡ä»¶å‘é€
+ * ½ÌÊ¦Ñ¡ÔñÎÄ¼ş·¢ËÍ
  * @author Administrator
  *
  */
 public class SUDocument extends Thread{
-//å®¢æˆ·ç«¯
-	private String ip = "127.0.0.1";// è®¾ç½®æˆæœåŠ¡å™¨IP
-	private int port = 8822;//è®¾ç½®ç«¯å£å·
+//¿Í»§¶Ë
+	private String ip = "127.0.0.1";// ÉèÖÃ³É·şÎñÆ÷IP
+	private int port = 8822;//ÉèÖÃ¶Ë¿ÚºÅ
 	public void run(){
-		//ä¸Šä¼ æ–‡ä»¶ï¼Œå°†æœ¬åœ°æ–‡ä»¶ä¼ è¾“åˆ°æœåŠ¡å™¨ç«¯
+		//ÉÏ´«ÎÄ¼ş£¬½«±¾µØÎÄ¼ş´«Êäµ½·şÎñÆ÷¶Ë
 		try {
 			ServerSocket server= new ServerSocket(port);
 			//        Socket socket = new Socket(ip,port); 
 			while (true) {
 
-				//            	String filePath="C:\\Users\\Administrator\\Desktop\\a\\ç”µè„‘çŸ¥è¯†\\1.docx";
-				// åˆ›å»ºæ–‡ä»¶é€‰æ‹©å™¨
+				//            	String filePath="C:\\Users\\Administrator\\Desktop\\a\\µçÄÔÖªÊ¶\\1.docx";
+				// ´´½¨ÎÄ¼şÑ¡ÔñÆ÷
 				JFileChooser jf = new JFileChooser();
-				//æ‰“å¼€æ—¶æ˜¾ç¤ºæ–‡ä»¶å’Œç›®å½•
+				//´ò¿ªÊ±ÏÔÊ¾ÎÄ¼şºÍÄ¿Â¼
 				jf.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
-				//å¼¹å‡ºâ€œæ‰“å¼€æ–‡ä»¶â€é€‰æ‹©æ¡†            	
+				//µ¯³ö¡°´ò¿ªÎÄ¼ş¡±Ñ¡Ôñ¿ò            	
 				jf.showOpenDialog(null);
-				//è¿”å›é€‰ä¸­çš„æ–‡ä»¶            	
+				//·µ»ØÑ¡ÖĞµÄÎÄ¼ş            	
 				String filePath = jf.getSelectedFile().getPath();
 
 				File fi = new File(filePath);
-				System.out.println("æ–‡ä»¶é•¿åº¦:" + (int) fi.length());
+				System.out.println("ÎÄ¼ş³¤¶È:" + (int) fi.length());
 				/* DataInputStream dis = new DataInputStream(new BufferedInputStream(s.getInputStream()));
                 dis.readByte();
 				 */
@@ -48,7 +48,7 @@ public class SUDocument extends Thread{
 
 				DataInputStream fis = new DataInputStream(new BufferedInputStream(new FileInputStream(filePath)));
 				DataOutputStream ps = new DataOutputStream(socket.getOutputStream());
-				//å°†æ–‡ä»¶ååŠé•¿åº¦ä¼ ç»™å®¢æˆ·ç«¯ã€‚è¿™é‡Œè¦çœŸæ­£é€‚ç”¨æ‰€æœ‰å¹³å°ï¼Œä¾‹å¦‚ä¸­æ–‡åçš„å¤„ç†ï¼Œè¿˜éœ€è¦åŠ å·¥ï¼Œå…·ä½“å¯ä»¥å‚è§Think In Java 4thé‡Œæœ‰ç°æˆçš„ä»£ç ã€‚
+				//½«ÎÄ¼şÃû¼°³¤¶È´«¸ø¿Í»§¶Ë¡£ÕâÀïÒªÕæÕıÊÊÓÃËùÓĞÆ½Ì¨£¬ÀıÈçÖĞÎÄÃûµÄ´¦Àí£¬»¹ĞèÒª¼Ó¹¤£¬¾ßÌå¿ÉÒÔ²Î¼ûThink In Java 4thÀïÓĞÏÖ³ÉµÄ´úÂë¡£
 				ps.writeUTF(fi.getName());
 				ps.flush();
 
@@ -66,19 +66,18 @@ public class SUDocument extends Thread{
 					ps.write(buf, 0, read);
 				}
 				ps.flush();
-				// æ³¨æ„å…³é—­socketé“¾æ¥å“¦ï¼Œä¸ç„¶å®¢æˆ·ç«¯ä¼šç­‰å¾…serverçš„æ•°æ®è¿‡æ¥ï¼Œ
-				// ç›´åˆ°socketè¶…æ—¶ï¼Œå¯¼è‡´æ•°æ®ä¸å®Œæ•´ã€‚                
+				// ×¢Òâ¹Ø±ÕsocketÁ´½ÓÅ¶£¬²»È»¿Í»§¶Ë»áµÈ´ıserverµÄÊı¾İ¹ıÀ´£¬
+				// Ö±µ½socket³¬Ê±£¬µ¼ÖÂÊı¾İ²»ÍêÕû¡£                
 				fis.close();
 				socket.close();                
-				System.out.println("æ–‡ä»¶ä¼ è¾“å®Œæˆ");
+				System.out.println("ÎÄ¼ş´«ÊäÍê³É");
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}  
 	}
- 
+	public static void main(String arg[]) {
+		new CDocument().start();;
+	}
 }  
-//public static void main(String arg[]) {
-////String filepath="D:\\test.txt";
-//       new CDocument().UpFile();;
-//   }
+
