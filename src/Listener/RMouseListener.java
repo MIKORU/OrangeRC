@@ -9,8 +9,6 @@ import javax.swing.JOptionPane;
 import javax.swing.border.Border;
 import javax.swing.border.EtchedBorder;
 
-import Document.SUDocument;
-
 /**
  * 
  * 对主界面四个功能按钮的监听
@@ -19,7 +17,6 @@ import Document.SUDocument;
  *
  */
 public class RMouseListener implements MouseListener {
-	public static boolean cl = false;
 	public RMouseListener() {
 		// TODO Auto-generated constructor stub
 	}
@@ -27,17 +24,8 @@ public class RMouseListener implements MouseListener {
 	public void mouseClicked(MouseEvent e) {
 		// TODO Auto-generated method stub
 		String btnName =((JButton)e.getSource()).getText();
-		if("控制屏幕".equals(btnName.trim())){
-			cl=(cl==true?false:true);
-			if(cl==true){
-				JOptionPane.showMessageDialog(null,"开启控制屏幕功能\n请双击选择一位学生！\n再次点击控制屏幕按钮可取消","提示",JOptionPane.DEFAULT_OPTION);
-			}else{
-				JOptionPane.showMessageDialog(null,"关闭控制屏幕功能\n","提示",JOptionPane.DEFAULT_OPTION);
-			}
-		}
-		if("文件传输".equals(btnName.trim())){
-			SUDocument d=new SUDocument();
-			d.start();
+		if("帮助设置".equals(btnName.trim())){
+			
 		}
 	}
 

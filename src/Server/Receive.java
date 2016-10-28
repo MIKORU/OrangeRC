@@ -1,8 +1,10 @@
 package Server;
 
+import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.RenderingHints;
+import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -19,56 +21,71 @@ import ServerUI.GUI;
  * @author MIKORU
  * @date 2016.09.27
  */  
-public class Receive extends Thread {  
+public class Receive implements Runnable {  
 		boolean isAlive = true;  
 		ImageIcon icon;
 		private Socket st;
 		private ObjectInputStream ins;
+		private int port;
+		private String ip;
 		
 		private int s = 0;
 		
-	    public Receive(Socket st,int order) {
+	    public Receive(Socket st,int port,int order,String ip) {
 			this.st = st;
+			this.port = port;
 			this.s = order;
+			this.ip = ip;
 		}
 		public void run() {
-			try {
-	            ins = new ObjectInputStream(st.getInputStream());  
-	        } catch (IOException e) {  
-	            e.printStackTrace();  
-	        }
-                while (isAlive) {
-	            	try {
-						icon = (ImageIcon) ins.readObject();
-					} catch (ClassNotFoundException e1) {
+                try {
+	            	//while (isAlive) {
+                	for (int i = 0; i < 50; i++){
+	            		ins = new ObjectInputStream(st.getInputStream());  
+	            		icon = (ImageIcon) ins.readObject();
+						
+	            		Toolkit tool = Toolkit.getDefaultToolkit();  
+	                    Dimension dis = tool.getScreenSize();
+		                Image img = icon.getImage();
+		                BufferedImage bi = resize(img,380,220);
+		                BufferedImage ai = resize(img,dis.width,dis.height);
+		                BigScreen.la.setIcon(new ImageIcon(ai));
+		                GUI.la_image[s].setIcon(new ImageIcon(bi));
+		                GUI.la_image[s].setText(ip);
+		                GUI.la_image[s].setIconTextGap(4);
+                	}
+		                //Thread.sleep(1000/20);
+	            	//}
+                }
+//                catch (InterruptedException e) {
+//						// TODO Auto-generated catch block
+//						//e.printStackTrace();
+//	            		System.out.println("错误1");
+//				}
+                catch (ClassNotFoundException e1) {
+						//e1.printStackTrace();
+						System.out.println("错误2");
+				}catch (IOException e1) {
 						e1.printStackTrace();
-					} catch (IOException e1) {
-						e1.printStackTrace();
-					}
-	                Image img = icon.getImage();
-	                BufferedImage bi = resize(img,380,220);
-	                BufferedImage ai = resize(img,1000,720);
-	                BigScreen.la.setIcon(new ImageIcon(ai));
-	                GUI.la_image[s].setIcon(new ImageIcon(bi));
-	                GUI.la_image[s].setText(RemoteServer.ip);
-	                GUI.la_image[s].setIconTextGap(4);
-	                try {
-						Thread.sleep(1000);
-					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-	                try { 
-	                	st.sendUrgentData(0); 
-	                	} catch (IOException e) { 
-	                		isAlive = false;    //如果抛出了异常，那么就是断开连接了  跳出无限循环
-	                		GUI.la_image[s].setIcon(new ImageIcon(GUI.class.getResource("./image/huaji.png")));
-	                		//BigScreen.la.setIcon(new ImageIcon("./image/CE.jpg"));
-	                		BigScreen.la.setBounds(0, 0, 1000, 700);
-	                		GUI.la_image[s].setText("主机"+s);
-	                		GUI.la_image[s].setIconTextGap(15);
-	                }
+						System.out.println("错误3");
 				}
+                finally {
+					try {
+						if(st!=null){
+							ins.close();
+							st.close();
+							System.out.println("Server端口关闭！");
+						}
+					} catch (IOException e) {}
+				}  
+//	                catch (IOException e) { 
+//	                		isAlive = false;    //如果抛出了异常，那么就是断开连接了  跳出无限循环
+//	                		GUI.la_image[s].setIcon(new ImageIcon(GUI.class.getResource("/image/huaji.png")));
+//	                		//BigScreen.la.setIcon(new ImageIcon("/image/CE.jpg"));
+//	                		//BigScreen.la.setBounds(0, 0, 1000, 700);
+//	                		GUI.la_image[s].setText("主机"+s);
+//	                		GUI.la_image[s].setIconTextGap(15);
+//	                }
          }
         private BufferedImage resize(Image img, int newW, int newH) {
             int w = img.getWidth(null);

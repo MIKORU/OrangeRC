@@ -15,29 +15,25 @@ public class RemoteServer {
     
     public static final int USERNUM = 60;
 	public static String ip;
-    private static Socket st;
-    private static String[] ips = new String[USERNUM];
+    public static Socket st;
+    public static String[] ips = new String[USERNUM];
     private static int order = 0;
-
-	@SuppressWarnings("resource")
+    private static int port;
 	public static void main(String[] args) {
     	
-    	@SuppressWarnings("unused")
-		final int USERNUM = 56;
-    	
-    	new Login();
-    	//new GUI();
+    	//new Login();
+    	new GUI();
+    	port = 1113;
         ServerSocket server = null;  
         try {  
-            server = new ServerSocket(1123);
+            server = new ServerSocket(port);
 			while(true){
-				try {
-					st = server.accept();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
+				st = server.accept();
 				ip = st.getInetAddress().getHostAddress();
-				new Receive(st,getorder(ip)).start();
+				int s = getorder(ip);
+				System.out.println(st);
+				System.out.println("ip = "+ip);
+				new Thread(new Receive(st,port,s,ip)).start();
 			}
         } catch (IOException e) {  
             e.printStackTrace();
