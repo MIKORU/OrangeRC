@@ -9,6 +9,8 @@ import javax.swing.JOptionPane;
 import javax.swing.border.Border;
 import javax.swing.border.EtchedBorder;
 
+import ServerUI.HelpUI;
+
 /**
  * 
  * 对主界面四个功能按钮的监听
@@ -25,7 +27,7 @@ public class RMouseListener implements MouseListener {
 		// TODO Auto-generated method stub
 		String btnName =((JButton)e.getSource()).getText();
 		if("帮助设置".equals(btnName.trim())){
-			
+			new HelpUI();
 		}
 	}
 

@@ -40,7 +40,7 @@ class SendThread implements Runnable {
         while (isAlive) {
         	try {
         		st = new Socket(ip, port);
-        		for (int i = 0; i < 9000; i++) {
+        		for (int i = 0; i < 50; i++) {
 	        		os = new ObjectOutputStream(st.getOutputStream());
 	        		
 	        		robot = new Robot();  

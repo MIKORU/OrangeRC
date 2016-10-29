@@ -74,7 +74,7 @@ public class GUI extends JFrame{
 		btn.setUI(new BasicButtonUI());// 恢复基本视觉效果
 		btn.setPreferredSize(new Dimension(w, h));// 设置按钮大小
 		btn.setContentAreaFilled(false);// 设置按钮透明
-		btn.setFont(new Font("黑体", Font.PLAIN, 25));// 按钮文本样式
+		btn.setFont(new Font(Font.DIALOG, Font.BOLD, 25));// 按钮文本样式
 		btn.setMargin(new Insets(0, 0, 0, 0));// 按钮内容与边框距离
         btn.setVerticalTextPosition(JButton.BOTTOM);
         btn.setHorizontalTextPosition(JButton.CENTER);

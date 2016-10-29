@@ -66,8 +66,13 @@ public class Receive implements Runnable {
 						//e1.printStackTrace();
 						System.out.println("´íÎó2");
 				}catch (IOException e1) {
-						e1.printStackTrace();
+						//e1.printStackTrace();
 						System.out.println("´íÎó3");
+                		GUI.la_image[s].setIcon(new ImageIcon(GUI.class.getResource("image/orange.png")));
+                		BigScreen.la.setIcon(new ImageIcon(GUI.class.getResource("image/CE.jpg")));
+                		//BigScreen.la.setBounds(0, 0, 1000, 700);
+                		GUI.la_image[s].setText("Ö÷»ú"+s);
+                		GUI.la_image[s].setIconTextGap(15);
 				}
                 finally {
 					try {

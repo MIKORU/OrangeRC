@@ -68,6 +68,7 @@ public class BigScreen extends JFrame{
         Dimension dis = tool.getScreenSize();
 		frame.setSize(dis);
 		la.setSize(dis);
+		la.setIcon(new ImageIcon(GUI.class.getResource("image/CE.jpg")));
 		frame.add(la);
 		frame.addKeyListener(new KeyAdapter(){
 			public void keyPressed(KeyEvent e) {
@@ -111,7 +112,6 @@ public class BigScreen extends JFrame{
 				 
 			}
 		});
-		//la.setIcon(new ImageIcon(BigScreen.class.getResource("./image/CE.jpg")));
 		frame.setDefaultCloseOperation(HIDE_ON_CLOSE);
 		frame.setVisible(true);
 		frame.setAlwaysOnTop(true);

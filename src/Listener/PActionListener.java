@@ -26,6 +26,7 @@ public class PActionListener implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 		String order = e.getActionCommand();
+		System.out.println(order);
 		if(order.equals("控制电脑")){
 			JOptionPane.showMessageDialog(null,"现在连接到"+Iorder+"号机","提示",JOptionPane.DEFAULT_OPTION);
 			new BigScreen(Iorder+"号机",Server.RemoteServer.ips[Iorder]);
@@ -34,12 +35,14 @@ public class PActionListener implements ActionListener {
 		}else if(order.equals("关机")){
 			try {
 				new Thread(new Shutdown("关机",Iorder)).start();
+				System.out.println("关机ing");
 			} catch (IOException e1) {
 				e1.printStackTrace();
 			}
 		}else if(order.equals("重启")){
 			try {
 				new Thread(new Shutdown("重启",Iorder)).start();
+				System.out.println("重启ing");
 			} catch (IOException e1) {
 				e1.printStackTrace();
 			}
