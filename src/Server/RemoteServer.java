@@ -21,8 +21,8 @@ public class RemoteServer {
     private static int port;
 	public static void main(String[] args) {
     	
-    	//new Login();
-    	new GUI();
+    	new Login();
+    	//new GUI();
     	port = 1113;
         ServerSocket server = null;  
         try {  

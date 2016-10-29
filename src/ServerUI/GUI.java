@@ -46,23 +46,23 @@ public class GUI extends JFrame{
 	}
 	
 	private JPanel addJPanel() {
-		JPanel menuPanel = new BackgroundPane(new ImageIcon(GUI.class.getResource("/image/menubb.jpg")));
+		JPanel menuPanel = new BackgroundPane(new ImageIcon(GUI.class.getResource("image/menubb.jpg")));
 		//JPanel menuPanel = new JPanel();
 		menuPanel.setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
 
-		docuBtn = createBtn("文件传输","/image/document64.png",150,140);
+		docuBtn = createBtn("文件传输","./image/document64.png",150,140);
 		menuPanel.add(docuBtn);
 		//docuBtn.addMouseListener(new RMouseListener());
 		
-		screenBtn = createBtn("屏幕演示", "/image/computer64.png",150,140);
+		screenBtn = createBtn("屏幕演示", "./image/computer64.png",150,140);
 		menuPanel.add(screenBtn);
 		//screenBtn.addMouseListener(new RMouseListener());
 		
-		playBtn = createBtn("关机重启", "/image/shutdown64.png",150,140);
+		playBtn = createBtn("关机重启", "./image/shutdown64.png",150,140);
 		menuPanel.add(playBtn);
 		//playBtn.addMouseListener(new RMouseListener());
 		
-		setBtn = createBtn("帮助设置", "/image/setting64.png",150,140);
+		setBtn = createBtn("帮助设置", "./image/setting64.png",150,140);
 		menuPanel.add(setBtn);
 		//controlBtn.addMouseListener(new RMouseListener());
 		
@@ -113,15 +113,15 @@ public class GUI extends JFrame{
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		this.setLayout(null);
 		
-		JLabel jls = new JLabel(new ImageIcon(GUI.class.getResource("/image/menub.jpg")));
+		JLabel jls = new JLabel(new ImageIcon(GUI.class.getResource("image/menub.jpg")));
 	  	jls.setBounds(0, 0, 1300,120);
 		
-		JPanel jlp = new BackgroundPane(new ImageIcon(GUI.class.getResource("/image/background.jpg")));
+		JPanel jlp = new BackgroundPane(new ImageIcon(GUI.class.getResource("image/background.jpg")));
 		jlp.setLayout(new GridLayout(USERNUM/3+1,3,5,5));
       
 		
 		for(int i=0;i<USERNUM;i++){
-		    la_image[i] = createBtn("主机 "+i,"/image/orange.png",300,250);
+		    la_image[i] = createBtn("主机 "+i,"./image/orange.png",300,250);
 		    jlp.add(la_image[i]);
 		    la_image[i].setComponentPopupMenu(createJPop(i));
 		    //la_image[i].setOpaque(true);
