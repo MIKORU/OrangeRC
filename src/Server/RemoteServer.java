@@ -31,8 +31,6 @@ public class RemoteServer {
 				st = server.accept();
 				ip = st.getInetAddress().getHostAddress();
 				int s = getorder(ip);
-				System.out.println(st);
-				System.out.println("ip = "+ip);
 				new Thread(new Receive(st,port,s,ip)).start();
 			}
         } catch (IOException e) {  

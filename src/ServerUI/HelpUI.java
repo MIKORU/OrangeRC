@@ -42,7 +42,7 @@ public class HelpUI extends JFrame{
         jp1.setBackground(null);
         
         
-        JLabel la = new JLabel(new ImageIcon(GUI.class.getResource("image/orange32.png")));
+        JLabel la = new JLabel(new ImageIcon(GUI.class.getResource("/image/orange32.png")));
         la.setText("发送到客户端的默认路径：");
         la.setFont(new Font(Font.DIALOG, Font.BOLD, 15));
         la.setBounds(10,15+20,250,30);
@@ -177,7 +177,7 @@ public class HelpUI extends JFrame{
 	}
 	private JPanel addPanel(String name,String path) {
 		JPanel jp2 = new JPanel();
-		JLabel la = new JLabel(new ImageIcon(GUI.class.getResource("image/orange32.png")));
+		JLabel la = new JLabel(new ImageIcon(GUI.class.getResource("/image/orange32.png")));
         la.setText(name);
         la.setFont(new Font(Font.DIALOG, Font.BOLD, 15));
 		la.setBounds(20,20,150,30);
@@ -219,7 +219,7 @@ public class HelpUI extends JFrame{
 		this.setLayout(null);
 		this.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		
-        JLabel jl= new JLabel(new ImageIcon(GUI.class.getResource("image/Help.jpg")));
+        JLabel jl= new JLabel(new ImageIcon(GUI.class.getResource("/image/Help.jpg")));
         jl.setBounds(0,0,500,130);
         this.add(jl);
         
@@ -227,14 +227,14 @@ public class HelpUI extends JFrame{
         tabbedPane.setTabLayoutPolicy(JTabbedPane.WRAP_TAB_LAYOUT);
         this.getContentPane().add(tabbedPane);
 
-        ImageIcon imageIcon = new ImageIcon(HelpUI.class.getResource("image/orange32.png"));
+        ImageIcon imageIcon = new ImageIcon(HelpUI.class.getResource("/image/orange32.png"));
         
         tabbedPane.addTab("  路径设置 ", imageIcon,addJPanel(),"点击设置默认传输文件路径");
         
-        tabbedPane.addTab("  帮助说明 ", imageIcon,addPanel("  功能介绍 ","read_me.txt"),"点击查看帮助说明");
+        tabbedPane.addTab("  帮助说明 ", imageIcon,addPanel("  功能介绍 ","/read_me.txt"),"点击查看帮助说明");
         
         
-        tabbedPane.addTab("  开发人员 ", imageIcon,addPanel("Reset113 成员","ous.txt"),"点击查看开发人员");
+        tabbedPane.addTab("  开发人员 ", imageIcon,addPanel("Reset113 成员","/ous.txt"),"点击查看开发人员");
 
         
         tabbedPane.addTab("  高级选项 ", imageIcon,new JLabel(),"点击获取更多功能权限");

@@ -4,12 +4,16 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 import javax.swing.AbstractButton;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.border.Border;
 import javax.swing.border.EtchedBorder;
 
+import Server.BroderCast;
+import ServerUI.GUI;
 import ServerUI.HelpUI;
+import Server.Shutdown;
 
 /**
  * 
@@ -29,6 +33,23 @@ public class RMouseListener implements MouseListener {
 		if("帮助设置".equals(btnName.trim())){
 			new HelpUI();
 		}
+		if("屏幕演示".equals(btnName.trim())){
+			new Thread(new BroderCast()).start();
+			System.out.println("开始啦");
+		}
+		if("文件传输".equals(btnName.trim())){
+			
+		}
+		if("关机重启".equals(btnName.trim())){
+			Object[] opt ={ "关机", "重启", "取消" };  
+			int n = JOptionPane.showOptionDialog(null,"请选择操作:\n", "操作", JOptionPane.YES_NO_CANCEL_OPTION,JOptionPane.QUESTION_MESSAGE, new ImageIcon(GUI.class.getResource("/image/orange32.png")), opt, "关机");  
+			if(n==0){
+				new Thread(new Shutdown("关机")).start();
+			}else if(n==1){
+				new Thread(new Shutdown("重启")).start();
+			}
+		}
+		
 	}
 
 	@Override

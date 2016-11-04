@@ -36,8 +36,8 @@ public class Login extends JFrame{
         jPasswordField = new JPasswordField(12);
         jLabel1 = new JLabel("用户名 ");
         jLabel2 = new JLabel(" 密码  ");
-        jb1 = createBtn("确认","image/yes.png");
-        jb2 = createBtn("取消","image/cancel.png");
+        jb1 = createBtn("确认","/image/yes.png");
+        jb2 = createBtn("取消","/image/cancel.png");
         jp1 = new JPanel();
         jp2 = new JPanel();
         jp3 = new JPanel();
@@ -58,7 +58,7 @@ public class Login extends JFrame{
         jp3.add(jb2); //第三块面板添加确认和取消
         jp3.setBounds(0,350,500,140);
         
-        jl= new JLabel(new ImageIcon(GUI.class.getResource("image/Login.jpg")));
+        jl= new JLabel(new ImageIcon(GUI.class.getResource("/image/Login.jpg")));
         jl.setBounds(0,0,500,190);
         
         this.add(jp1);

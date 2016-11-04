@@ -18,6 +18,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
+import Server.Receive;
 import Server.RemoteServer;
 
 
@@ -35,9 +36,10 @@ import Server.RemoteServer;
 public class BigScreen extends JFrame{
 	private String ip;
 	ObjectOutputStream objectOut ;
-	public static JLabel la = new JLabel();
-	public BigScreen(String btnName,String ip){
+	int order;
+	public BigScreen(String btnName,int order,String ip){
 		this.ip = ip;
+		this.order = order;
 		display(btnName);
 	}
 	/**
@@ -47,9 +49,6 @@ public class BigScreen extends JFrame{
 	public void sendEvent(InputEvent event) {
 		try {
 			Socket st = new Socket(ip,1123);
-			if(st.isConnected()){
-				  System.out.println("socket connected..."+st);
-			}
 			objectOut = new ObjectOutputStream(st.getOutputStream());
 	        objectOut.writeObject(event);
 	        objectOut.flush();
@@ -67,9 +66,7 @@ public class BigScreen extends JFrame{
         Toolkit tool = Toolkit.getDefaultToolkit();  
         Dimension dis = tool.getScreenSize();
 		frame.setSize(dis);
-		la.setSize(dis);
-		la.setIcon(new ImageIcon(GUI.class.getResource("image/CE.jpg")));
-		frame.add(la);
+		frame.add(GUI.la[order]);
 		frame.addKeyListener(new KeyAdapter(){
 			public void keyPressed(KeyEvent e) {
 				sendEvent(e);

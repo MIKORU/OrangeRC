@@ -26,7 +26,7 @@ public class LMouseListener extends RMouseListener{
 		String btnName =((JButton)e.getSource()).getText();
 		String Keyname = frame2.jTextField.getText().trim();
 		if ("确认".equals(btnName.trim())) {
-			if("14251104235".equals(Keyname)){
+			if("123".equals(Keyname)){
 					frame2.dispose();
 					JOptionPane.showMessageDialog(null,"登陆成功！","提示",JOptionPane.DEFAULT_OPTION);
 					new GUI();

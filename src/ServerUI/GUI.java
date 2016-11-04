@@ -40,29 +40,30 @@ public class GUI extends JFrame{
 	private JButton playBtn = null;
 	private final static int USERNUM = RemoteServer.USERNUM; 
 	public static JButton[] la_image  = new JButton[USERNUM];
+	public static JLabel[] la  = new JLabel[USERNUM];
 	
 	public GUI(){
 		display();
 	}
 	
 	private JPanel addJPanel() {
-		JPanel menuPanel = new BackgroundPane(new ImageIcon(GUI.class.getResource("image/menubb.jpg")));
+		JPanel menuPanel = new BackgroundPane(new ImageIcon(GUI.class.getResource("/image/menubb.jpg")));
 		//JPanel menuPanel = new JPanel();
 		menuPanel.setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
 
-		docuBtn = createBtn("文件传输","./image/document64.png",150,140);
+		docuBtn = createBtn("文件传输","/image/document64.png",150,140);
 		menuPanel.add(docuBtn);
 		//docuBtn.addMouseListener(new RMouseListener());
 		
-		screenBtn = createBtn("屏幕演示", "./image/computer64.png",150,140);
+		screenBtn = createBtn("屏幕演示", "/image/computer64.png",150,140);
 		menuPanel.add(screenBtn);
 		//screenBtn.addMouseListener(new RMouseListener());
 		
-		playBtn = createBtn("关机重启", "./image/shutdown64.png",150,140);
+		playBtn = createBtn("关机重启", "/image/shutdown64.png",150,140);
 		menuPanel.add(playBtn);
 		//playBtn.addMouseListener(new RMouseListener());
 		
-		setBtn = createBtn("帮助设置", "./image/setting64.png",150,140);
+		setBtn = createBtn("帮助设置", "/image/setting64.png",150,140);
 		menuPanel.add(setBtn);
 		//controlBtn.addMouseListener(new RMouseListener());
 		
@@ -82,24 +83,30 @@ public class GUI extends JFrame{
 		btn.setIconTextGap(15);
 		return btn;
 	}
+	private JButton createPBtn(String text,int i) {
+		JButton btn = new JButton(text, new ImageIcon(GUI.class.getResource("/image/bgbtn.png")));
+		btn.setUI(new BasicButtonUI());// 恢复基本视觉效果
+		btn.setPreferredSize(new Dimension(120, 50));// 设置按钮大小
+		btn.setContentAreaFilled(false);// 设置按钮透明
+		btn.setFont(new Font(Font.DIALOG, Font.BOLD, 20));// 按钮文本样式
+		btn.setMargin(new Insets(0, 0, 0, 0));// 按钮内容与边框距离
+        //btn.setVerticalTextPosition(JButton.BOTTOM);
+        btn.setHorizontalTextPosition(JButton.CENTER);
+        btn.addActionListener(new PActionListener(i));
+		//btn.setIconTextGap(15);
+		return btn;
+	}
 	private JPopupMenu createJPop(int i){
 		JPopupMenu popupMenu = new JPopupMenu();  
-        JMenuItem menuItem1 = new JMenuItem("关机");
-        JMenuItem menuItem2 = new JMenuItem("重启");
-        JMenuItem menuItem3 = new JMenuItem("发送文件");
-        JMenuItem menuItem4 = new JMenuItem("控制电脑");
+        JButton menubtn1 = createPBtn("关机",i);
+        JButton menubtn2 = createPBtn("重启",i);
+        JButton menubtn3 = createPBtn("文件传输",i);
+        JButton menubtn4 = createPBtn("控制电脑",i);
         
-        popupMenu.add(menuItem1);
-        popupMenu.add(menuItem2);
-        popupMenu.add(new JSeparator());
-        popupMenu.add(menuItem3);
-        popupMenu.add(new JSeparator());
-        popupMenu.add(menuItem4);
-        
-	    menuItem1.addActionListener (new PActionListener(i));
-        menuItem2.addActionListener (new PActionListener(i));
-        menuItem3.addActionListener (new PActionListener(i));
-        menuItem4.addActionListener (new PActionListener(i));
+        popupMenu.add(menubtn1);
+        popupMenu.add(menubtn2);
+        popupMenu.add(menubtn3);
+        popupMenu.add(menubtn4);
         
         return popupMenu;
 		
@@ -113,15 +120,16 @@ public class GUI extends JFrame{
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		this.setLayout(null);
 		
-		JLabel jls = new JLabel(new ImageIcon(GUI.class.getResource("image/menub.jpg")));
+		JLabel jls = new JLabel(new ImageIcon(GUI.class.getResource("/image/menub.jpg")));
 	  	jls.setBounds(0, 0, 1300,120);
 		
-		JPanel jlp = new BackgroundPane(new ImageIcon(GUI.class.getResource("image/background.jpg")));
+		JPanel jlp = new BackgroundPane(new ImageIcon(GUI.class.getResource("/image/background.jpg")));
 		jlp.setLayout(new GridLayout(USERNUM/3+1,3,5,5));
       
 		
 		for(int i=0;i<USERNUM;i++){
-		    la_image[i] = createBtn("主机 "+i,"./image/orange.png",300,250);
+		    la_image[i] = createBtn("主机 "+i,"/image/orange.png",300,250);
+		    la[i] = new JLabel();
 		    jlp.add(la_image[i]);
 		    la_image[i].setComponentPopupMenu(createJPop(i));
 		    //la_image[i].setOpaque(true);
