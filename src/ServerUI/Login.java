@@ -9,7 +9,7 @@ import java.awt.*;
 
 /**
  * 
- * 登陆界面UI设计
+ * 登陆界面UI设计（目前已废弃）
  * @author MIKORU
  *
  */

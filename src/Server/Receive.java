@@ -30,9 +30,7 @@ import ServerUI.GUI;
  * @author MIKORU
  * @date 2016.09.27
  */  
-public class Receive implements Runnable {  
-		boolean isAlive = true;  
-		ImageIcon icon;
+public class Receive implements Runnable {
 		private Socket st;
 		private int port;
 		private String ip;
@@ -46,28 +44,13 @@ public class Receive implements Runnable {
 		}
 		public void run() {
                 try {
-//                	DataInputStream ImgInput = new DataInputStream(st.getInputStream());
-//                    ZipInputStream imgZip = new ZipInputStream(ImgInput);
-//                    
-//            		Toolkit tool = Toolkit.getDefaultToolkit();  
-//                    Dimension dis = tool.getScreenSize();
-//                    
-//                    imgZip.getNextEntry();             //Zip文件流的开始处
-//                    Image img = ImageIO.read(imgZip);
-//                    BufferedImage bi = resize(img,380,220);
-//	                BufferedImage ai = resize(img,dis.width,dis.height);
-//	                BigScreen.la.setIcon(new ImageIcon(ai));
-//	                GUI.la_image[s].setIcon(new ImageIcon(bi));
-//	                GUI.la_image[s].setText(ip);
-//	                GUI.la_image[s].setIconTextGap(4);
-//                    TimeUnit.MILLISECONDS.sleep(50);// 接收图片间隔时间
-//                    imgZip.close();
-//                    ImgInput.close();
                 	DataInputStream ins = new DataInputStream(st.getInputStream());
+                	
                 	int len = ins.readInt();
                 	byte[] data=new byte[len];
                     ins.readFully(data);
                     ByteArrayInputStream bins=new ByteArrayInputStream(data);
+                    
                     BufferedImage image= ImageIO.read(bins);
                     ImageIcon ic=new ImageIcon(image);
                     Image img = ic.getImage();
@@ -75,22 +58,18 @@ public class Receive implements Runnable {
             		Toolkit tool = Toolkit.getDefaultToolkit();  
             		Dimension dis = tool.getScreenSize();
                     
-                    BufferedImage bi = resize(img,380,220);
-	                BufferedImage ai = resize(img,dis.width,dis.height);
+                    BufferedImage screen = resize(img,380,220);
+	                BufferedImage bigscreen = resize(img,dis.width,dis.height);
 	                
+	                GUI.la[s].setIcon(new ImageIcon(bigscreen));//大屏幕影像
 	                
-	                GUI.la[s].setIcon(new ImageIcon(ai));
-	                GUI.la_image[s].setIcon(new ImageIcon(bi));
+	                GUI.la_image[s].setIcon(new ImageIcon(screen));//小屏幕影像
 	                GUI.la_image[s].setText(ip);
 	                GUI.la_image[s].setIconTextGap(4);
 	                Thread.sleep(100);
 	                
                 }catch (InterruptedException e) {
-						//e.printStackTrace();
-	            		System.out.println("错误1");
 				}catch (IOException e1) {
-						//e1.printStackTrace();
-						//System.out.println("错误3");
 						GUI.la_image[s].setIcon(new ImageIcon(GUI.class.getResource("/image/orange.png")));
                 		GUI.la[s].setIcon(new ImageIcon(GUI.class.getResource("/image/CE.jpg")));
                 		GUI.la_image[s].setText("主机"+s);
@@ -101,11 +80,18 @@ public class Receive implements Runnable {
 					try {
 						if(st!=null){
 							st.close();
-							//System.out.println("Server端口关闭！");
 						}
 					} catch (IOException e) {}
 				}
          }
+		/**
+		 * 对Image进行压缩图像处理
+		 * 
+		 * @param img
+		 * @param newW
+		 * @param newH
+		 * @return
+		 */
         private BufferedImage resize(Image img, int newW, int newH) {
             int w = img.getWidth(null);
             int h = img.getHeight(null);

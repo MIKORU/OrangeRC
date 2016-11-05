@@ -14,31 +14,38 @@ import java.net.Socket;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 
-import ClientUI.BigScreen;
-
+import ClientUI.CBigScreen;
+import Listener.PActionListener;
+/**
+ * 端口1153
+ * 广播功能 学生端接收教师端截屏信息
+ * 
+ * @author MIKORU
+ *
+ */
 public class ReceiveThread implements Runnable{
-	private BigScreen frame;
+	private CBigScreen frame;
 	private String ip;
 	private Socket st;
-	public ReceiveThread(BigScreen frame,String ip){
+	public ReceiveThread(CBigScreen frame,String ip){
 		this.frame = frame;
 		this.ip = ip;
 	}
 	@Override
 	public void run() {
-		// TODO Auto-generated method stub
 		while(frame.getFlag()){
-			//System.out.println(frame.getFlag());
 				try {
 					st = new Socket(ip,1153);
-					//System.out.println("连接上啦！");
 					frame.display();
 					DataInputStream ins = new DataInputStream(st.getInputStream());
-                	int len = ins.readInt();
+                	
+					int len = ins.readInt();
                 	byte[] data=new byte[len];
                     ins.readFully(data);
                     ByteArrayInputStream bins=new ByteArrayInputStream(data);
+                    
                     BufferedImage image= ImageIO.read(bins);
                     ImageIcon ic=new ImageIcon(image);
                     Image img = ic.getImage();
@@ -50,12 +57,9 @@ public class ReceiveThread implements Runnable{
 	                Thread.sleep(100);
 					
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					//e.printStackTrace();
-					//System.out.println("连不上服务器QAQ~");
+					frame.la.setIcon(null);
+					frame.setVisible(false);
 				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
 				}finally{
 	                try {
 	                	if(st!=null)

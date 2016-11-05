@@ -24,7 +24,7 @@ import Server.RemoteServer;
 
 /**
  * 
- * 监听端口1234，发送控制屏幕的消息
+ * 监听端口1123，发送控制屏幕的消息
  * 放大屏幕，达成控制客户端屏幕的效果
  * 
  * @author MIKORU
@@ -35,8 +35,9 @@ import Server.RemoteServer;
 @SuppressWarnings("serial")
 public class BigScreen extends JFrame{
 	private String ip;
-	ObjectOutputStream objectOut ;
-	int order;
+	private ObjectOutputStream objectOut ;
+	private int order;
+	
 	public BigScreen(String btnName,int order,String ip){
 		this.ip = ip;
 		this.order = order;
@@ -49,12 +50,12 @@ public class BigScreen extends JFrame{
 	public void sendEvent(InputEvent event) {
 		try {
 			Socket st = new Socket(ip,1123);
+			
 			objectOut = new ObjectOutputStream(st.getOutputStream());
 	        objectOut.writeObject(event);
 	        objectOut.flush();
+	        
 		}catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
     }
 	/**
@@ -106,7 +107,6 @@ public class BigScreen extends JFrame{
 			}
 			public void mouseMoved(MouseEvent e) {
 				sendEvent(e);
-				 
 			}
 		});
 		frame.setDefaultCloseOperation(HIDE_ON_CLOSE);

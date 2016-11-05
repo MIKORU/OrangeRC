@@ -11,14 +11,16 @@ import ServerUI.Login;
  * 
  * @author MIKORU
  */
-public class RemoteServer {  
+public class RemoteServer {
     
     public static final int USERNUM = 60;
 	public static String ip;
     public static Socket st;
     public static String[] ips = new String[USERNUM];
+    
     private static int order = 0;
     private static int port;
+    
 	public static void main(String[] args) {
     	
     	//new Login();
@@ -30,11 +32,10 @@ public class RemoteServer {
 			while(true){
 				st = server.accept();
 				ip = st.getInetAddress().getHostAddress();
-				int s = getorder(ip);
-				new Thread(new Receive(st,port,s,ip)).start();
+				int Sorder = getorder(ip);
+				new Thread(new Receive(st,port,Sorder,ip)).start();
 			}
-        } catch (IOException e) {  
-            e.printStackTrace();
+        } catch (IOException e) {
         }
     }
 	/**

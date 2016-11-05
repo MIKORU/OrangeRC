@@ -18,11 +18,12 @@ import Server.Shutdown;
 /**
  * 
  * 对主界面四个功能按钮的监听
- * （暂时）只实现了控制屏幕
  * @author MIKORU
  *
  */
 public class RMouseListener implements MouseListener {
+	private boolean count = true;//点击按钮单双次数 目前只用于屏幕广播开启关闭
+	
 	public RMouseListener() {
 		// TODO Auto-generated constructor stub
 	}
@@ -34,8 +35,17 @@ public class RMouseListener implements MouseListener {
 			new HelpUI();
 		}
 		if("屏幕演示".equals(btnName.trim())){
-			new Thread(new BroderCast()).start();
-			System.out.println("开始啦");
+			if(count == true){
+				int n = JOptionPane.showConfirmDialog(null,"确定开启屏幕广播？","提示",JOptionPane.OK_CANCEL_OPTION,JOptionPane.INFORMATION_MESSAGE,new ImageIcon(PActionListener.class.getResource("/image/orange32.png")));
+				if(n==0)
+					new Thread(new BroderCast()).start();
+			}else{
+				int n = JOptionPane.showConfirmDialog(null,"确定关闭屏幕广播？","提示",JOptionPane.OK_CANCEL_OPTION,JOptionPane.INFORMATION_MESSAGE,new ImageIcon(PActionListener.class.getResource("/image/orange32.png")));
+				if(n==0){
+					BroderCast.StopThread();
+				}
+			}
+			count = !count;
 		}
 		if("文件传输".equals(btnName.trim())){
 			

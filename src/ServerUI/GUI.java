@@ -7,18 +7,15 @@ import java.awt.Graphics;
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.Insets;
-import java.net.URL;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
-import javax.swing.JSeparator;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.plaf.basic.BasicButtonUI;
 
@@ -32,12 +29,8 @@ import Server.RemoteServer;
  * @author MIKORU
  *
  */
-@SuppressWarnings("serial")
 public class GUI extends JFrame{
-	private JButton setBtn = null;
-	private JButton docuBtn = null;
-	private JButton screenBtn = null;
-	private JButton playBtn = null;
+	
 	private final static int USERNUM = RemoteServer.USERNUM; 
 	public static JButton[] la_image  = new JButton[USERNUM];
 	public static JLabel[] la  = new JLabel[USERNUM];
@@ -48,52 +41,61 @@ public class GUI extends JFrame{
 	
 	private JPanel addJPanel() {
 		JPanel menuPanel = new BackgroundPane(new ImageIcon(GUI.class.getResource("/image/menubb.jpg")));
-		//JPanel menuPanel = new JPanel();
 		menuPanel.setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
 
-		docuBtn = createBtn("文件传输","/image/document64.png",150,140);
+		JButton docuBtn = createBtn("文件传输","/image/document64.png",150,140);
 		menuPanel.add(docuBtn);
-		//docuBtn.addMouseListener(new RMouseListener());
 		
-		screenBtn = createBtn("屏幕演示", "/image/computer64.png",150,140);
+		JButton screenBtn = createBtn("屏幕演示", "/image/computer64.png",150,140);
 		menuPanel.add(screenBtn);
-		//screenBtn.addMouseListener(new RMouseListener());
 		
-		playBtn = createBtn("关机重启", "/image/shutdown64.png",150,140);
+		JButton playBtn = createBtn("关机重启", "/image/shutdown64.png",150,140);
 		menuPanel.add(playBtn);
-		//playBtn.addMouseListener(new RMouseListener());
 		
-		setBtn = createBtn("帮助设置", "/image/setting64.png",150,140);
+		JButton setBtn = createBtn("帮助设置", "/image/setting64.png",150,140);
 		menuPanel.add(setBtn);
-		//controlBtn.addMouseListener(new RMouseListener());
 		
 		return menuPanel;
 	}
-
+	/**
+	 * 
+	 * 一般按钮个性化设置
+	 * 
+	 * @param text
+	 * @param icon
+	 * @param w
+	 * @param h
+	 * @return
+	 */
 	private JButton createBtn(String text, String icon,int w,int h) {
 		JButton btn = new JButton(text, new ImageIcon(GUI.class.getResource(icon)));
-		btn.setUI(new BasicButtonUI());// 恢复基本视觉效果
-		btn.setPreferredSize(new Dimension(w, h));// 设置按钮大小
-		btn.setContentAreaFilled(false);// 设置按钮透明
-		btn.setFont(new Font(Font.DIALOG, Font.BOLD, 25));// 按钮文本样式
-		btn.setMargin(new Insets(0, 0, 0, 0));// 按钮内容与边框距离
+		btn.setUI(new BasicButtonUI());
+		btn.setPreferredSize(new Dimension(w, h));
+		btn.setContentAreaFilled(false);//设置按钮透明
+		btn.setFont(new Font(Font.DIALOG, Font.BOLD, 25));//按钮文本样式
+		btn.setMargin(new Insets(0, 0, 0, 0));//按钮内容与边框距离
         btn.setVerticalTextPosition(JButton.BOTTOM);
         btn.setHorizontalTextPosition(JButton.CENTER);
         btn.addMouseListener(new RMouseListener());
 		btn.setIconTextGap(15);
 		return btn;
 	}
+	/**
+	 * 个人弹出窗口按钮个性化设置
+	 * 
+	 * @param text
+	 * @param i
+	 * @return
+	 */
 	private JButton createPBtn(String text,int i) {
 		JButton btn = new JButton(text, new ImageIcon(GUI.class.getResource("/image/bgbtn.png")));
-		btn.setUI(new BasicButtonUI());// 恢复基本视觉效果
-		btn.setPreferredSize(new Dimension(120, 50));// 设置按钮大小
-		btn.setContentAreaFilled(false);// 设置按钮透明
-		btn.setFont(new Font(Font.DIALOG, Font.BOLD, 20));// 按钮文本样式
-		btn.setMargin(new Insets(0, 0, 0, 0));// 按钮内容与边框距离
-        //btn.setVerticalTextPosition(JButton.BOTTOM);
+		btn.setUI(new BasicButtonUI());
+		btn.setPreferredSize(new Dimension(120, 50));
+		btn.setContentAreaFilled(false);
+		btn.setFont(new Font(Font.DIALOG, Font.BOLD, 20));
+		btn.setMargin(new Insets(0, 0, 0, 0));
         btn.setHorizontalTextPosition(JButton.CENTER);
         btn.addActionListener(new PActionListener(i));
-		//btn.setIconTextGap(15);
 		return btn;
 	}
 	private JPopupMenu createJPop(int i){
@@ -132,23 +134,25 @@ public class GUI extends JFrame{
 		    la[i] = new JLabel();
 		    jlp.add(la_image[i]);
 		    la_image[i].setComponentPopupMenu(createJPop(i));
-		    //la_image[i].setOpaque(true);
 		}
-		
+		//侧边功能栏
 	    JPanel menuPanel = addJPanel();
 	  	menuPanel.setBounds(0,120,150, 580);
 	  	menuPanel.setBorder(BorderFactory.createMatteBorder(15, 1, 1, 1, Color.white));
-
+	  	
+	  	//主要屏幕显示
 	  	JScrollPane scroll = new JScrollPane(jlp);
 	  	scroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 	  	scroll.setBorder(BorderFactory.createTitledBorder("屏幕分享"));
 	  	scroll.setBounds(150,120,1150, 580);
 	  	scroll.setBackground(Color.white);
+	  	
 	  	this.getContentPane().add(menuPanel);
 	  	this.getContentPane().add(jls);
 	    this.getContentPane().add(scroll);
+	    
 	    this.getContentPane().setBackground(Color.white);
-	    this.setResizable(false);
+	    this.setResizable(false);//不可更改屏幕大小
 	}
 }
 /***
@@ -156,7 +160,6 @@ public class GUI extends JFrame{
  * @author MIKORU
  *
  */
-@SuppressWarnings("serial")
 class BackgroundPane extends JPanel {
     private Image image = null;
     public BackgroundPane(ImageIcon image) {  

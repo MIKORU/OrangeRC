@@ -28,7 +28,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 public class HelpUI extends JFrame{
-	public static String fpaths = "桌面";
+	public static String fpaths = "桌面";//最终默认文件接收地址
 	private  String pan;
 	private  String fname;
 	LinkLabel ll = new LinkLabel("访问Githb_Reset113", "https://github.com/Reset113");
@@ -43,7 +43,7 @@ public class HelpUI extends JFrame{
         
         
         JLabel la = new JLabel(new ImageIcon(GUI.class.getResource("/image/orange32.png")));
-        la.setText("发送到客户端的默认路径：");
+        la.setText("默认文件存放路径：");
         la.setFont(new Font(Font.DIALOG, Font.BOLD, 15));
         la.setBounds(10,15+20,250,30);
         la.setOpaque(false);
@@ -249,7 +249,11 @@ public class HelpUI extends JFrame{
 		HelpUI ui= new HelpUI(); 
 	}
 }
-
+/**
+ * 外链地址实现
+ * @author MIKORU
+ *
+ */
 class LinkLabel extends JLabel {
     private String text, url;
     private boolean isSupported;
