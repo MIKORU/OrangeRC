@@ -28,7 +28,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 public class HelpUI extends JFrame{
-	public static String fpaths = "桌面";//最终默认文件接收地址
+	public static String fpaths = "C:\\Users\\Administrator\\Desktop\\";//最终默认文件接收地址
 	private  String pan;
 	private  String fname;
 	LinkLabel ll = new LinkLabel("访问Githb_Reset113", "https://github.com/Reset113");
@@ -196,7 +196,8 @@ public class HelpUI extends JFrame{
 			fread.close();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+////////////////			
+//			e.printStackTrace();
 		}
 		
 		area.setBounds(60,65,300,300);

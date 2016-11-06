@@ -26,11 +26,13 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
+import Document.CDocument;
+
 
 
 public class ClientGUI extends JFrame{
 
-	public static String cpaths = "桌面";
+	public static String cpaths = "C:\\Users\\Administrator\\Desktop\\";
 	private  String pan;
 	private  String fname;
 	LinkLabel ll = new LinkLabel("访问Githb_Reset113", "https://github.com/Reset113");
@@ -151,7 +153,7 @@ public class ClientGUI extends JFrame{
 		        jtf.setEnabled(false);
 		        btn.setEnabled(false);
 		        btn2.setEnabled(false);
-		        cpaths = "桌面";
+		        cpaths = "C:\\Users\\Administrator\\Desktop\\";
 			}
 			
         });
@@ -180,6 +182,8 @@ public class ClientGUI extends JFrame{
 		jp1.add(ll);
 		
 		frame.setContentPane(jp1);
+/////////////////		
+		System.out.println(cpaths);
 		
         return frame;
 	}
@@ -188,7 +192,7 @@ public class ClientGUI extends JFrame{
             ImageIcon icon = new ImageIcon(ClientGUI.class.getResource("/image/orange16.png"));
             PopupMenu popupMenu = new PopupMenu();
             MenuItem itemExit = new MenuItem("退出系统");
-            MenuItem itemPush = new MenuItem("传输文件");
+            MenuItem itemPush = new MenuItem("发送文件");
             MenuItem itemRecive = new MenuItem("默认文件路径");
             itemExit.addActionListener(new ActionListener() {
                 @Override
@@ -200,6 +204,7 @@ public class ClientGUI extends JFrame{
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     //弹出窗口选择文件
+                	new Thread(new CDocument()).start();
                 }
             });
             itemRecive.addActionListener(new ActionListener() {

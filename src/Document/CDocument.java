@@ -17,8 +17,8 @@ import javax.swing.JFileChooser;
 public class CDocument implements Runnable {
 	private Socket socket;
 	String ip;
-	public CDocument(String ip){
-		this.ip=ip;
+	public CDocument(){
+		
 	}
 	
 //	public static void main(String[] args) {
@@ -78,8 +78,8 @@ public class CDocument implements Runnable {
 			} 
 		}
 //	}	
-	public static void main(String[] args) {
-		String ip="127.0.0.1";
-		new Thread(new CDocument(ip)).start();
-	}
+//	public static void main(String[] args) {
+//		String ip="127.0.0.1";
+//		new Thread(new CDocument(ip)).start();
+//	}
 }

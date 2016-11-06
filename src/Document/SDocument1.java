@@ -22,7 +22,6 @@ public class SDocument1 extends ServerSocket implements Runnable{
 	String order;
 	String ip;
 	int count=0;
-	int num=RemoteServer.ips.length;
 	
 	public SDocument1() throws IOException {
 		super(port);
@@ -42,16 +41,12 @@ public class SDocument1 extends ServerSocket implements Runnable{
 			SimpleDateFormat df = new SimpleDateFormat("ssSSS");//设置日期格式
 			String s=df.format(new Date());
 			int b=Integer.parseInt(s);
-			System.out.println(b);
 			int a=0;
 			if(ip==null){
 				//用时间判断关闭进程
 				while(flag==0){ 
-					System.out.println("233");
 					String s1=df.format(new Date());
 					a=Integer.parseInt(s1);
-					System.out.println(a);
-					System.out.println(b);
 					if(a-b>=5000){
 						flag=1;
 					}

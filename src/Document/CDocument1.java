@@ -11,6 +11,8 @@ import java.net.Socket;
 
 import javax.swing.filechooser.FileSystemView;
 
+import ClientUI.ClientGUI;
+import ServerUI.HelpUI;
 import sun.applet.Main;
 
 /**
@@ -23,13 +25,13 @@ public class CDocument1 implements Runnable{
 	String ip;
 	int flag=0;
 	int a=0;
-	String fpaths=null;
+	static String cpaths=new ClientGUI().cpaths;
+	
 //	File desktopDir = FileSystemView.getFileSystemView().getHomeDirectory();
 //	String desktopPath = desktopDir.getAbsolutePath();
 	
-	public CDocument1(String ip,String fpaths){
+	public CDocument1(String ip){
 		this.ip=ip;
-		this.fpaths=fpaths;
 		
 	}
 	
@@ -38,18 +40,18 @@ public class CDocument1 implements Runnable{
 		while(flag==0){
 			//从服务器端下载文件
 			try { 
-					System.out.println(a);	
+					System.out.println(cpaths);
 					socket=new Socket(ip,8888);
 					DataInputStream is = new  DataInputStream(socket.getInputStream());   
 					OutputStream os = socket.getOutputStream();                  
 					//1、得到文件名     
 					
 //					String filename="E:\\";
-					if(fpaths.equals("0")){
-					
-						fpaths="C:\\Users\\Administrator\\Desktop\\";
-					}
-					String filename=fpaths+is.readUTF();
+//					if(fpaths.equals("0")){
+//					
+//						fpaths="C:\\Users\\Administrator\\Desktop\\";
+//					}
+					String filename=cpaths+is.readUTF();
 
 					
 					File file=new File(filename);
@@ -78,19 +80,17 @@ public class CDocument1 implements Runnable{
 				// TODO Auto-generated catch block  
 //				e.printStackTrace();  
 			} 
-			System.out.println(a);
 		}
 		//文件传输指令接收
 		if(a==1){
-			System.out.println("开8888");
-			new Thread(new CDocument1(ip,fpaths)).start();//8888
+			new Thread(new CDocument1(ip)).start();//8888
 		}
         
 	}
-		public static void main(String[] args){
-			String ip="127.0.0.1";
-			new CDocument1(ip,"0");
-		}
+//		public static void main(String[] args){
+//			String ip="127.0.0.1";
+//			new CDocument1(ip,"0");
+//		}
 }	
 
 

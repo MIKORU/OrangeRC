@@ -14,15 +14,14 @@ public class SDocument extends ServerSocket implements Runnable{
 	public SDocument() throws IOException{
 		//Ïàµ±ÓÚServerSocket server= new ServerSocket(port);
 		super(port);
-		
 	}
-	public static void main(String[] args) {
-		try {
-			new SDocument();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
+//	public static void main(String[] args) {
+//		try {
+//			new SDocument();
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
+//	}
 	@Override
 	public void run() {
 		try{

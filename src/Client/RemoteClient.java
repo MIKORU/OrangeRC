@@ -3,9 +3,10 @@ import java.io.IOException;
 import java.net.UnknownHostException;
 
 
+
 import Document.CDocument;
 import Document.CDocument1;
-
+import ServerUI.HelpUI;
 import ClientUI.CBigScreen;
 import ClientUI.ClientGUI;
 
@@ -19,7 +20,6 @@ import ClientUI.ClientGUI;
  */
 public class RemoteClient {
 	private static String ip = "127.0.0.1";
-	static String fpaths="0";
 	public static void main(String[] args) throws UnknownHostException, IOException {
 
 		//系统托盘
@@ -38,7 +38,8 @@ public class RemoteClient {
 
         
         //文件传输指令接收
-        new Thread(new CDocument1(ip,fpaths)).start();//8888
+        
+        new Thread(new CDocument1(ip)).start();//8888
 	
 
         //教师广播指令1153

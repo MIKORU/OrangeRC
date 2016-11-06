@@ -7,6 +7,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.Socket;
+
+import ServerUI.HelpUI;
 /**
  * 教师端调用
  * @author Administrator
@@ -15,6 +17,7 @@ import java.net.Socket;
 public class Document extends Thread{
 
 	private Socket socket;
+	static String fpaths=new HelpUI().fpaths;
 	public Document(Socket socket) {
 		super();
 		this.socket=socket;
@@ -24,11 +27,14 @@ public class Document extends Thread{
 	public void run(){
 		//从服务器端下载文件
 		try { 
+				System.out.println(fpaths);
 				DataInputStream is = new  DataInputStream(socket.getInputStream());   
 				OutputStream os = socket.getOutputStream();                  
-				//1、得到文件名       
-				String filename="E:\\";
-				filename += is.readUTF(); 
+				//1、得到文件名  
+//				if(fpaths.equals("0")){
+//					fpaths="C:\\Users\\Administrator\\Desktop\\";
+//				}
+				String filename=fpaths+is.readUTF();
 
 				System.out.println("新生成的文件名为:"+filename);  
 				FileOutputStream fos=new FileOutputStream(filename);
