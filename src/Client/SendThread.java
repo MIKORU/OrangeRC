@@ -20,6 +20,9 @@ import java.util.zip.ZipOutputStream;
 import javax.imageio.ImageIO;
 import javax.imageio.stream.ImageOutputStream;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
+
+import Listener.PActionListener;
 
 /**
  * 
@@ -29,11 +32,12 @@ import javax.swing.ImageIcon;
  * @date 2016.09.27
  */
 class SendThread implements Runnable {  
-    Robot robot;  
-    ObjectOutputStream os; 
-    Rectangle rect;  
-    private boolean isAlive = true;  
-    Socket st;
+    private Robot robot;
+    private Rectangle rect;
+    
+    private boolean isAlive = true;
+    
+    private Socket st;
     private String ip;
   
     public SendThread(String ip) {
@@ -41,7 +45,6 @@ class SendThread implements Runnable {
 		try {
 			robot = new Robot();
 		} catch (AWTException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	 	Point p = new Point(0, 0);
@@ -54,43 +57,27 @@ class SendThread implements Runnable {
         while (isAlive) {
         	try {
         		st = new Socket(ip, 1113);
-//        		ZipOutputStream zip = new ZipOutputStream(new DataOutputStream(st.getOutputStream()));
-//                zip.setLevel(9);     //压缩级别
-//                
-//        		robot = new Robot();  
-//                Point p = new Point(0, 0);
-//                Toolkit tool = Toolkit.getDefaultToolkit();  
-//                Dimension dis = tool.getScreenSize();  
-//                rect = new Rectangle(p, dis);
-//                
-//                BufferedImage img = robot.createScreenCapture(rect);
-//                zip.putNextEntry(new ZipEntry("screen.jpg"));
-//                ImageIO.write(img, "jpg", zip);
-//                if(zip!=null)
-//                	zip.close();
-        			DataOutputStream ous = new DataOutputStream(st.getOutputStream()); 
-               
-        		 	BufferedImage img = robot.createScreenCapture(rect);
-        		 	ByteArrayOutputStream temB=new ByteArrayOutputStream();
-        		 	ImageIO.write(img,"jpeg",temB);
-               
-        		 	byte[] data=temB.toByteArray();
-        		 	ous.writeInt(data.length);
-        		 	ous.write(data);
-        		 	ous.flush();
-        		 	Thread.sleep(100);
-            }catch (Exception e) {  
-            	//e.printStackTrace();
-            	System.out.println("连接断开");
-            	break;
-            	//System.exit(0);
+        		DataOutputStream ous = new DataOutputStream(st.getOutputStream()); 
+        			
+        		//截图图像转byte 传输速度一般
+        		BufferedImage img = robot.createScreenCapture(rect);
+        		ByteArrayOutputStream imgStream=new ByteArrayOutputStream();
+        		ImageIO.write(img,"jpeg",imgStream);
+        		byte[] data=imgStream.toByteArray();
+        		 	
+        		ous.writeInt(data.length);
+        		ous.write(data);
+        		ous.flush();
+        		Thread.sleep(100);
+            }catch (Exception e) {
+            	JOptionPane.showConfirmDialog(null,"与服务器端断开连接！","提示",JOptionPane.DEFAULT_OPTION,JOptionPane.INFORMATION_MESSAGE,new ImageIcon(PActionListener.class.getResource("/image/orange32.png")));
+            	isAlive = false;
         	}finally {
 				try {
 					if(st!=null){
 						st.close();
-						//System.out.println("Client端口关闭！");
 					}
-				} catch (IOException e) {}
+				}catch (IOException e) {}
 			}   
         }  
     }  

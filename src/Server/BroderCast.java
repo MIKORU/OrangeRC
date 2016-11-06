@@ -16,66 +16,78 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 import javax.imageio.ImageIO;
-import ServerUI.GUI;
+import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 
+import Listener.PActionListener;
+import ServerUI.GUI;
+/**
+ * 教师端广播功能
+ * 截屏发送给学生端
+ * 鼠标无法截图 改为获取鼠标位置并绘制到图像上
+ * 
+ * 端口1153
+ * @author MIKORU
+ *
+ */
 public class BroderCast implements Runnable {
 	private Socket st;
+	private ServerSocket server;
+	
 	private Robot robot;
 	private Rectangle rect;
-	ServerSocket server;
+	
+	
+	volatile static boolean flag = true;
+	
+	public static void StopThread() {
+		flag = false;
+	}
 	public BroderCast(){
 		try {
 			server = new ServerSocket(1153);
-			System.out.println("开放端口！");
+			
 			robot = new Robot();
 			Point p = new Point(0, 0);
 		 	Toolkit tool = Toolkit.getDefaultToolkit();  
 		 	Dimension dis = tool.getScreenSize();  
 		 	rect = new Rectangle(p, dis);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		} catch (AWTException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
 		
 	}
 	@Override
 	public void run() {
-		// TODO Auto-generated method stub
-		while(true){
+		while(flag){
 		 	try {
 		 		st = server.accept();
-		 		System.out.println("连接上了！");
 		 		DataOutputStream ous = new DataOutputStream(st.getOutputStream()); 
 	            
 			 	BufferedImage img = robot.createScreenCapture(rect);
-			 	BufferedImage cursor= ImageIO.read(new File(GUI.class.getResource("/image/mouse.png").getPath()));  //把鼠标加载到缓存中
-			 	Point p= MouseInfo.getPointerInfo().getLocation();               //获取鼠标坐标
+			 	BufferedImage cursor= ImageIO.read(new File(GUI.class.getResource("/image/mouse.png").getPath()));//把鼠标加载到缓存中
+			 	Point p= MouseInfo.getPointerInfo().getLocation();//获取鼠标坐标
 			 	img.createGraphics().drawImage(cursor, p.x, p.y, null); 
 			 	
-			 	ByteArrayOutputStream temB=new ByteArrayOutputStream();
-				ImageIO.write(img,"jpeg",temB);
-			 	byte[] data=temB.toByteArray();
+			 	ByteArrayOutputStream screen=new ByteArrayOutputStream();
+				ImageIO.write(img,"jpeg",screen);
+				byte[] data=screen.toByteArray();
+			 	
 			 	ous.writeInt(data.length);
 			 	ous.write(data);
 			 	ous.flush();
 			 	Thread.sleep(100);
 			 	
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
 			}finally {
                 if (st != null) {
                     try {
                         st.close();
-                    } catch (IOException e) {e.printStackTrace();}
+                    } catch (IOException e) {}
                 }
 			}
 		}
+		JOptionPane.showConfirmDialog(null,"屏幕广播已经关闭！","提示",JOptionPane.DEFAULT_OPTION,JOptionPane.INFORMATION_MESSAGE,new ImageIcon(PActionListener.class.getResource("/image/orange32.png")));
 	}
 }

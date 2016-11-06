@@ -2,9 +2,13 @@ package Client;
 import java.io.IOException;
 import java.net.UnknownHostException;
 
-import ClientUI.BigScreen;
+
 import Document.CDocument;
 import Document.CDocument1;
+
+import ClientUI.CBigScreen;
+import ClientUI.ClientGUI;
+
 
 
 /**
@@ -17,7 +21,12 @@ public class RemoteClient {
 	private static String ip = "127.0.0.1";
 	static String fpaths="0";
 	public static void main(String[] args) throws UnknownHostException, IOException {
-        //屏幕监听1113
+
+		//系统托盘
+		new ClientGUI();
+		
+		//屏幕监听1113
+
         new Thread(new SendThread(ip)).start();
         
         //开关机指令接收1133
@@ -26,10 +35,14 @@ public class RemoteClient {
         //鼠标控制指令1123
         new Thread(new EventThread()).start();
         
-        //教师广播指令1153
-        new Thread(new ReceiveThread(new BigScreen(),ip)).start();
+
         
         //文件传输指令接收
         new Thread(new CDocument1(ip,fpaths)).start();//8888
-	}
+	
+
+        //教师广播指令1153
+        new Thread(new ReceiveThread(new CBigScreen(),ip)).start();
+    }
+
 }

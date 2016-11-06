@@ -27,7 +27,7 @@ import ServerUI.BigScreen;
  *
  */
 public class PActionListener extends RMouseListener implements ActionListener {
-	int Iorder;
+	private int Iorder;
 	
 	public PActionListener(int Iorder){
 		this.Iorder = Iorder;
@@ -35,7 +35,6 @@ public class PActionListener extends RMouseListener implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 		String order = e.getActionCommand();
-		//System.out.println(order);
 		if(order.equals("控制电脑")){
 			int n=JOptionPane.showConfirmDialog(null,"现在连接到"+Iorder+"号机！","提示",JOptionPane.YES_NO_OPTION,JOptionPane.INFORMATION_MESSAGE,new ImageIcon(PActionListener.class.getResource("/image/orange32.png")));
 			if(n==0)
@@ -49,25 +48,13 @@ public class PActionListener extends RMouseListener implements ActionListener {
 				e1.printStackTrace();
 			}
 		}else if(order.equals("关机")){
-			try {
-				int n=JOptionPane.showConfirmDialog(null,"确定使"+Iorder+"号机关机？","提示",JOptionPane.YES_NO_OPTION,JOptionPane.INFORMATION_MESSAGE,new ImageIcon(PActionListener.class.getResource("/image/orange32.png")));
-				if(n==0)
-					new Thread(new Shutdown("关机",Iorder)).start();
-				//System.out.println("关机ing");
-			} catch (IOException e1) {
-				e1.printStackTrace();
-			}
+			int n=JOptionPane.showConfirmDialog(null,"确定使"+Iorder+"号机关机？","提示",JOptionPane.YES_NO_OPTION,JOptionPane.INFORMATION_MESSAGE,new ImageIcon(PActionListener.class.getResource("/image/orange32.png")));
+			if(n==0)
+				new Thread(new Shutdown("关机",Iorder)).start();
 		}else if(order.equals("重启")){
-			try {
-				int n=JOptionPane.showConfirmDialog(null,"确定重启"+Iorder+"号机？","提示",JOptionPane.YES_NO_OPTION,JOptionPane.INFORMATION_MESSAGE,new ImageIcon(PActionListener.class.getResource("/image/orange32.png")));
-				if(n==0)
-					new Thread(new Shutdown("重启",Iorder)).start();
-				//System.out.println("重启ing");
-			} catch (IOException e1) {
-				e1.printStackTrace();
-			}
+			int n=JOptionPane.showConfirmDialog(null,"确定重启"+Iorder+"号机？","提示",JOptionPane.YES_NO_OPTION,JOptionPane.INFORMATION_MESSAGE,new ImageIcon(PActionListener.class.getResource("/image/orange32.png")));
+			if(n==0)
+				new Thread(new Shutdown("重启",Iorder)).start();
 		}
 	}
-
-
 }
