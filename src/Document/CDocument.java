@@ -1,119 +1,85 @@
 package Document;
 
 import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 
 import javax.swing.JFileChooser;
 /**
- * æ•™å¸ˆé€‰æ‹©æ–‡ä»¶å‘é€
+ * Ñ§Éú·¢ËÍÎÄ¼ş
  * @author Administrator
  *
  */
-public class CDocument extends Thread{
-//å®¢æˆ·ç«¯
-	private String ip = "127.0.0.1";// è®¾ç½®æˆæœåŠ¡å™¨IP
-	private int port = 8822;//è®¾ç½®ç«¯å£å·
-	public void run(){
-		//ä¸Šä¼ æ–‡ä»¶ï¼Œå°†æœ¬åœ°æ–‡ä»¶ä¼ è¾“åˆ°æœåŠ¡å™¨ç«¯
-		try {
-			ServerSocket server= new ServerSocket(port);
-			//        Socket socket = new Socket(ip,port); 
-			while (true) {
-
-				//            	String filePath="C:\\Users\\Administrator\\Desktop\\a\\ç”µè„‘çŸ¥è¯†\\1.docx";
-				// åˆ›å»ºæ–‡ä»¶é€‰æ‹©å™¨
-				JFileChooser jf = new JFileChooser();
-				//æ‰“å¼€æ—¶æ˜¾ç¤ºæ–‡ä»¶å’Œç›®å½•
-				jf.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
-				//å¼¹å‡ºâ€œæ‰“å¼€æ–‡ä»¶â€é€‰æ‹©æ¡†            	
-				jf.showOpenDialog(null);
-				//è¿”å›é€‰ä¸­çš„æ–‡ä»¶            	
-				String filePath = jf.getSelectedFile().getPath();
-
-				File fi = new File(filePath);
-				System.out.println("æ–‡ä»¶é•¿åº¦:" + (int) fi.length());
-				/* DataInputStream dis = new DataInputStream(new BufferedInputStream(s.getInputStream()));
-                dis.readByte();
-				 */
-				Socket socket = server.accept(); 
-
-				DataInputStream fis = new DataInputStream(new BufferedInputStream(new FileInputStream(filePath)));
-				DataOutputStream ps = new DataOutputStream(socket.getOutputStream());
-				//å°†æ–‡ä»¶ååŠé•¿åº¦ä¼ ç»™å®¢æˆ·ç«¯ã€‚è¿™é‡Œè¦çœŸæ­£é€‚ç”¨æ‰€æœ‰å¹³å°ï¼Œä¾‹å¦‚ä¸­æ–‡åçš„å¤„ç†ï¼Œè¿˜éœ€è¦åŠ å·¥ï¼Œå…·ä½“å¯ä»¥å‚è§Think In Java 4thé‡Œæœ‰ç°æˆçš„ä»£ç ã€‚
-				ps.writeUTF(fi.getName());
-				ps.flush();
-
-				int bufferSize = 8192;
-				byte[] buf = new byte[bufferSize];
-				while (true) {
-					int read = 0;
-					if (fis != null) {
-						read = fis.read(buf);
-					}
-
-					if (read == -1) {
-						break;
-					}
-					ps.write(buf, 0, read);
-				}
-				ps.flush();
-				// æ³¨æ„å…³é—­socketé“¾æ¥å“¦ï¼Œä¸ç„¶å®¢æˆ·ç«¯ä¼šç­‰å¾…serverçš„æ•°æ®è¿‡æ¥ï¼Œ
-				// ç›´åˆ°socketè¶…æ—¶ï¼Œå¯¼è‡´æ•°æ®ä¸å®Œæ•´ã€‚                
-				fis.close();
-				socket.close();                
-				System.out.println("æ–‡ä»¶ä¼ è¾“å®Œæˆ");
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}  
+public class CDocument implements Runnable {
+	private Socket socket;
+	String ip;
+	public CDocument(String ip){
+		this.ip=ip;
 	}
- /**
-  * æ•™å¸ˆæ¥æ”¶æ–‡ä»¶   
-  */
-public void DownFile(){
-//ä»æœåŠ¡å™¨ç«¯ä¸‹è½½æ–‡ä»¶
-try { 
-    Socket socket = new Socket(ip,port);
-           while(true){  
-               DataInputStream is = new  DataInputStream(socket.getInputStream());   
-               OutputStream os = socket.getOutputStream();                  
-               //1ã€å¾—åˆ°æ–‡ä»¶å       
-               String filename="E:\\";
-               filename += is.readUTF(); 
-             
-               System.out.println("æ–°ç”Ÿæˆçš„æ–‡ä»¶åä¸º:"+filename);  
-               FileOutputStream fos=new FileOutputStream(filename);
-				//é€šè¿‡å­—èŠ‚æ•°ç»„æ¥ç¼“å†²æ•°æ®ï¼ˆå­—èŠ‚ç¼“å†²æµï¼‰
-               BufferedOutputStream bos=new BufferedOutputStream(fos);
-               DataOutputStream dos = new DataOutputStream(bos);
-               byte[] b = new byte[1024]; 
-               int length = 0;  
-               while((length=is.read(b))!=-1){  
-                   //2ã€æŠŠsocketè¾“å…¥æµå†™åˆ°æ–‡ä»¶è¾“å‡ºæµä¸­å»  
-                   fos.write(b, 0, length);  
-               }  
-               dos.flush();  
-               dos.close();               
-               is.close();  
-               socket.close();  
-           }  
-             
-       } catch (IOException e) {  
-           // TODO Auto-generated catch block  
-           e.printStackTrace();  
-       }   
-}  
-//public static void main(String arg[]) {
-////String filepath="D:\\test.txt";
-//       new CDocument().UpFile();;
-//   }
+	
+//	public static void main(String[] args) {
+//		new CDocument();
+//	}
+	@Override
+	public void run() {
+		//·¢ËÍÎÄ¼ş
+//		while(true){
+			try {
+//				while (true) {
+					socket=new Socket(ip,8822);
+					// Ñ¡Ôñ½øĞĞ´«ÊäµÄÎÄ¼ş
+					// ´´½¨ÎÄ¼şÑ¡ÔñÆ÷
+					JFileChooser jf = new JFileChooser();
+					//´ò¿ªÊ±ÏÔÊ¾ÎÄ¼şºÍÄ¿Â¼
+					jf.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
+					//µ¯³ö¡°´ò¿ªÎÄ¼ş¡±Ñ¡Ôñ¿ò            	
+					jf.showOpenDialog(null);
+					//·µ»ØÑ¡ÖĞµÄÎÄ¼ş            	
+					String filePath = jf.getSelectedFile().getPath();
+
+					File fi = new File(filePath);
+					System.out.println("ÎÄ¼ş³¤¶È£º" + (int) fi.length());
+					// public Socket accept() throws
+					// IOExceptionÕìÌı²¢½ÓÊÜµ½´ËÌ×½Ó×ÖµÄÁ¬½Ó¡£´Ë·½·¨ÔÚ½øĞĞÁ¬½ÓÖ®Ç°Ò»Ö±×èÈû¡£
+					/* DataInputStream dis = new DataInputStream(new BufferedInputStream(socket.getInputStream()));
+	               dis.readByte();
+					 */
+					DataInputStream fis = new DataInputStream(new BufferedInputStream(new FileInputStream(filePath)));
+					DataOutputStream ps = new DataOutputStream(socket.getOutputStream());
+					//½«ÎÄ¼şÃû¼°³¤¶È´«¸ø¿Í»§¶Ë¡£ÕâÀïÒªÕæÕıÊÊÓÃËùÓĞÆ½Ì¨£¬ÀıÈçÖĞÎÄÃûµÄ´¦Àí£¬»¹ĞèÒª¼Ó¹¤£¬¾ßÌå¿ÉÒÔ²Î¼ûThink In Java 4thÀïÓĞÏÖ³ÉµÄ´úÂë¡£
+					ps.writeUTF(fi.getName());
+					System.out.println(fi.getName());
+					ps.flush();
+					int bufferSize = 8192;
+					byte[] buf = new byte[bufferSize];
+					while (true) {
+						int read = 0;
+						if (fis != null) {
+							read = fis.read(buf);
+						}
+						if (read == -1) {
+							break;
+						}
+						ps.write(buf, 0, read);
+					}
+					ps.flush();
+					// ×¢Òâ¹Ø±ÕsocketÁ´½ÓÅ¶£¬²»È»¿Í»§¶Ë»áµÈ´ıserverµÄÊı¾İ¹ıÀ´£¬
+					// Ö±µ½socket³¬Ê±£¬µ¼ÖÂÊı¾İ²»ÍêÕû¡£                
+					fis.close();
+					socket.close();                
+					System.out.println("ÎÄ¼ş´«ÊäÍê³É");
+//				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			} 
+		}
+//	}	
+	public static void main(String[] args) {
+		String ip="127.0.0.1";
+		new Thread(new CDocument(ip)).start();
+	}
 }

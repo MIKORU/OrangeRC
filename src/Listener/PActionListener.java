@@ -15,6 +15,7 @@ import javax.swing.JPanel;
 import javax.swing.border.Border;
 import javax.swing.border.EtchedBorder;
 
+import Document.SDocument1;
 import Server.Shutdown;
 import ServerUI.BigScreen;
 /**
@@ -39,8 +40,14 @@ public class PActionListener extends RMouseListener implements ActionListener {
 			int n=JOptionPane.showConfirmDialog(null,"现在连接到"+Iorder+"号机！","提示",JOptionPane.YES_NO_OPTION,JOptionPane.INFORMATION_MESSAGE,new ImageIcon(PActionListener.class.getResource("/image/orange32.png")));
 			if(n==0)
 				new BigScreen(Iorder+"号机",Iorder,Server.RemoteServer.ips[Iorder]);
-		}else if(order.equals("发送文件")){
-			
+		}else if(order.equals("文件传输")){
+			try {
+				int n=JOptionPane.showConfirmDialog(null,"确定要发送文件到"+Iorder +"号机？","提示",JOptionPane.YES_NO_OPTION,JOptionPane.INFORMATION_MESSAGE,new ImageIcon(PActionListener.class.getResource("/image/orange32.png")));
+				if(n==0)
+					new Thread(new SDocument1(Iorder)).start();
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
 		}else if(order.equals("关机")){
 			try {
 				int n=JOptionPane.showConfirmDialog(null,"确定使"+Iorder+"号机关机？","提示",JOptionPane.YES_NO_OPTION,JOptionPane.INFORMATION_MESSAGE,new ImageIcon(PActionListener.class.getResource("/image/orange32.png")));

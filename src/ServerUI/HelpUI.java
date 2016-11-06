@@ -145,7 +145,7 @@ public class HelpUI extends JFrame{
 		        jtf.setEnabled(false);
 		        btn.setEnabled(false);
 		        btn2.setEnabled(false);
-		        fpaths = "×ÀÃæ";
+		        fpaths = "C:\\Users\\Administrator\\Desktop\\";
 			}
 			
         });

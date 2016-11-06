@@ -2,6 +2,7 @@ package Listener;
 import java.awt.Color;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.IOException;
 
 import javax.swing.AbstractButton;
 import javax.swing.ImageIcon;
@@ -10,6 +11,8 @@ import javax.swing.JOptionPane;
 import javax.swing.border.Border;
 import javax.swing.border.EtchedBorder;
 
+import Document.SDocument;
+import Document.SDocument1;
 import Server.BroderCast;
 import ServerUI.GUI;
 import ServerUI.HelpUI;
@@ -38,6 +41,11 @@ public class RMouseListener implements MouseListener {
 			System.out.println("开始啦");
 		}
 		if("文件传输".equals(btnName.trim())){
+			try {
+				new Thread(new SDocument1()).start();
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
 			
 		}
 		if("关机重启".equals(btnName.trim())){

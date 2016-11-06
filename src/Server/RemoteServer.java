@@ -3,6 +3,7 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+import Document.SDocument;
 import ServerUI.GUI;
 import ServerUI.Login;
 
@@ -27,15 +28,18 @@ public class RemoteServer {
         ServerSocket server = null;  
         try {  
             server = new ServerSocket(port);
+            new Thread(new SDocument()).start();
 			while(true){
 				st = server.accept();
 				ip = st.getInetAddress().getHostAddress();
 				int s = getorder(ip);
 				new Thread(new Receive(st,port,s,ip)).start();
+				
 			}
         } catch (IOException e) {  
             e.printStackTrace();
         }
+        
     }
 	/**
 	 * 对每个IP分配序号

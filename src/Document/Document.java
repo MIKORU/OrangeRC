@@ -7,19 +7,23 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.Socket;
-
 /**
- * 教师接收文件   
+ * 教师端调用
+ * @author Administrator
+ *
  */
-public class SDDocument extends Thread{
+public class Document extends Thread{
 
-	private String ip = "127.0.0.1";// 设置成服务器IP
-	private int port = 8822;//设置端口号
-	public void start(){
+	private Socket socket;
+	public Document(Socket socket) {
+		super();
+		this.socket=socket;
+		this.start();
+	}
+	@Override
+	public void run(){
 		//从服务器端下载文件
 		try { 
-			Socket socket = new Socket(ip,port);
-			while(true){  
 				DataInputStream is = new  DataInputStream(socket.getInputStream());   
 				OutputStream os = socket.getOutputStream();                  
 				//1、得到文件名       
@@ -41,11 +45,11 @@ public class SDDocument extends Thread{
 				dos.close();               
 				is.close();  
 				socket.close();  
-			}  
 
 		} catch (IOException e) {  
 			// TODO Auto-generated catch block  
 			e.printStackTrace();  
-		}   
+		}  
 	}
+	
 }
