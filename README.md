@@ -6,7 +6,7 @@
 JAVA Socket实现。
 
 ###用法
-1.先运行教师端，登陆后，再打开学生端进行连接。
+1.先运行教师端，登陆后，再打开学生端进行连接。（用户名与密码一致，可自行更改）
 
 ![login](http://wx3.sinaimg.cn/mw690/005H4fpply1fcsf1jer55j30dw0ciag7.jpg "登录界面")
 
